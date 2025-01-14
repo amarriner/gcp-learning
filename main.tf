@@ -1,0 +1,17 @@
+terraform {
+  backend "gcs" {
+    bucket  = "amarriner-gcp"
+    prefix  = "terraform/state/gcp-learning"
+  }
+}
+
+provider "google" {
+  project     = "operating-bolt-447818-b5"
+  region      = "us-east4"
+}
+
+module "bucket" {
+  source = "./bucket"
+
+  bucket_name = var.bucket_name
+}
