@@ -15,3 +15,9 @@ module "bucket" {
 
   bucket_name = var.bucket_name
 }
+
+module "database" {
+  source = "./firestore"
+
+  database_name = var.database_name
+}
