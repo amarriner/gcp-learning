@@ -6,8 +6,15 @@ on:
       - main
     paths:
       - 'docker/**'
+      - '.github/workflows/docker-image.yml'
 
 jobs:
+  job_id:
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
   build:
     runs-on: ubuntu-latest
 
