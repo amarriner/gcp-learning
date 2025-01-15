@@ -30,17 +30,17 @@ jobs:
       - name: Auth to GCP
         uses: 'google-github-actions/auth@v2'
         with:
-          service_account: 'amarriner-workflow-sa@${{ GCP_PROJECT }}.iam.gserviceaccount.com'
-          workload_identity_provider: 'projects/${{ GITHUB_USER_ID }}/locations/global/workloadIdentityPools/amarriner-workload-pool/providers/amarriner-workload-pool-provider'
+          service_account: 'amarriner-workflow-sa@${{ env.GCP_PROJECT }}.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/${{ env.GITHUB_USER_ID }}/locations/global/workloadIdentityPools/amarriner-workload-pool/providers/amarriner-workload-pool-provider'
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
-          project_id: ${{ GCP_PROJECT }}
+          project_id: ${{ env.GCP_PROJECT }}
       - name: 'Docker auth'
         run: |-
           gcloud auth configure-docker us-east4-docker.pkg.dev
       - name: Build the Docker image
         run: |-
-          docker build . --file docker/git/Dockerfile --tag "${{ GCP_REGION }}.pkg.dev/${{ GCP_PROJECT }}/${{ GCP_REPO }}/${{ DOCKER_IMAGE }}:${{ DOCKER_TAG }}"
-          docker push "${{ GCP_REGION }}-docker.pkg.dev/${{ GCP_PROJECT }}/${{ GCP_REPO }}/${{ DOCKER_IMAGE }}:${{ DOCKER_TAG }}"
+          docker build . --file docker/git/Dockerfile --tag "${{ env.GCP_REGION }}.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPO }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}"
+          docker push "${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPO }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}"
 
