@@ -1,3 +1,4 @@
 .env
 .terraform
 tfplan
+gha-creds*.json
