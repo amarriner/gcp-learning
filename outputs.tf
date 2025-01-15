@@ -14,6 +14,14 @@ output "database_uid" {
   value = module.database.database_uid
 }
 
+output "function_id" {
+  value = module.function.function_id
+}
+
+output "function_url" {
+  value = module.function.function_url
+}
+
 output "repository_id" {
   value = module.artifacts.repository_id
 }

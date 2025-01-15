@@ -18,6 +18,10 @@ variable "database_name" {
   type = string
 }
 
+variable "function_name" {
+  type = string
+}
+
 variable "repository_id" {
   type = string
 }
@@ -25,4 +29,8 @@ variable "repository_id" {
 variable "region" {
   type    = string
   default = "us-east4"
+}
+
+variable "source_bucket_name" {
+  type = string
 }

@@ -33,6 +33,16 @@ docker/git/Dockerfile to build) and then re-ran TF apply which created the job p
     "type": "string",
     "value": "f14539c5-8399-4505-8920-fe6b7e1b0bd7"
   },
+  "function_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "projects/operating-bolt-447818-b5/locations/us-east4/functions/amarriner-gcp-learning-function"
+  },
+  "function_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://us-east4-operating-bolt-447818-b5.cloudfunctions.net/amarriner-gcp-learning-function"
+  },
   "repository_id": {
     "sensitive": false,
     "type": "string",
@@ -92,3 +102,12 @@ docker/git/Dockerfile to build) and then re-ran TF apply which created the job p
 ]
 ```
 
+## Sample Function Output
+
+```
+~ $ curl -X POST https://{function_url} \
+> -H "Authorization: bearer $(gcloud auth print-identity-token)" \
+> -H "Content-Type: application/json" \
+> -d '{  "name": "Hello World" }'
+Hello Hello World!
+```

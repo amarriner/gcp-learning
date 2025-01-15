@@ -45,3 +45,10 @@ module "database" {
   region        = var.region
 }
 
+module "function" {
+  source = "./function"
+
+  bucket_name   = var.source_bucket_name
+  function_name = var.function_name
+  region        = var.region
+}
