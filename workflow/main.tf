@@ -49,3 +49,12 @@ resource "google_service_account_iam_binding" "amarriner" {
     "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.amarriner.name}/attribute.repository/amarriner/gcp-learning",
   ]
 }
+
+resource "google_artifact_registry_repository_iam_binding" "binding" {
+  repository = var.artifact_repository_name
+  role       = google_project_iam_custom_role.amarriner.name
+  members = [
+    "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.amarriner.name}/attribute.repository/amarriner/gcp-learning",
+  ]
+}
+
