@@ -2,10 +2,10 @@ name: Docker Image CI
 
 on:
   push:
-    branches-ignore:
-      - '*'
-    tags:
-      - '*'
+    branches:
+      - main
+    paths:
+      - 'docker/**'
 
 jobs:
   build:
