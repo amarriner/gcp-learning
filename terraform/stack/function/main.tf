@@ -24,4 +24,11 @@ resource "google_cloudfunctions2_function" "amarriner" {
       }
     }
   }
+
+  # TODO: Temporary because I'm not explicitly setting any of these
+  lifecycle {
+    ignore_changes = [
+      service_config
+    ]
+  }
 }
