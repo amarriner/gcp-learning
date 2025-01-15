@@ -15,6 +15,12 @@ resource "google_project_iam_custom_role" "amarriner" {
   ]
 }
 
+resource "google_service_account_iam_member" "amarriner" {
+  service_account_id = google_service_account.amarriner.name
+  role               = google_project_iam_custom_role.amarriner.name
+  member             = "serviceAccount:${google_service_account.amarriner.email}"
+}
+
 resource "google_iam_workload_identity_pool" "amarriner" {
   workload_identity_pool_id = var.workload_identity_pool_id
   description               = "Workflow ID Pool Github"
