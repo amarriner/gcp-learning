@@ -35,6 +35,6 @@ jobs:
           gcloud auth configure-docker us-east4-docker.pkg.dev
       - name: Build the Docker image
         run: |-
-          docker build . --file docker/git/Dockerfile --tag amarriner-gcp-git:${{ github.ref_name }}
+          docker build . --file docker/git/Dockerfile --tag "us-east4-docker.pkg.dev/operating-bolt-447818-b5/amarriner-gcp-learning-repository/amarriner-gcp-git:${{ github.ref_name }}"
           docker push "us-east4-docker.pkg.dev/operating-bolt-447818-b5/amarriner-gcp-learning-repository/amarriner-gcp-git:${{ github.ref_name }}"
 
