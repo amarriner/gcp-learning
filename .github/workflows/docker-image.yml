@@ -12,6 +12,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Auth to GCP
+      uses: 'google-github-actions/auth@v2'
+      with:
+        service_account: 'amarriner-workflow-sa@operating-bolt-447818-b5.iam.gserviceaccount.com' # my-service-account@my-project.iam.gserviceaccount.com
+        workload_identity_provider: 'projects/852892243405/locations/global/workloadIdentityPools/amarriner-workload-pool/providers/amarriner-workload-pool-provider'
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v1'
+      with:
+        project_id: 'operating-bolt-447818-b5'
+    - name: 'Docker auth'
+      run: |-
+        gcloud auth configure-docker us-east4-docker.pkg.dev
     - name: Build the Docker image
-      run: docker build . --file docker/git/Dockerfile --tag amarriner-gcp-git:${{ github.ref_name }}
+      run: |-
+        docker build . --file docker/git/Dockerfile --tag amarriner-gcp-git:${{ github.ref_name }}
+        docker push "us-east4-docker.pkg.dev/operating-bolt-447818-b5/amarriner-gcp-learning-repository/amarriner-gcp-git:${{ github.ref_name }}"
