@@ -9,14 +9,14 @@ on:
       - '.github/workflows/docker-image.yml'
 
 jobs:
-  job_id:
-    # Add "id-token" with the intended permissions.
+    
+  docker_build:
+
+    runs-on: ubuntu-latest
+
     permissions:
       contents: 'read'
       id-token: 'write'
-
-    build:
-      runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -37,3 +37,4 @@ jobs:
         run: |-
           docker build . --file docker/git/Dockerfile --tag amarriner-gcp-git:${{ github.ref_name }}
           docker push "us-east4-docker.pkg.dev/operating-bolt-447818-b5/amarriner-gcp-learning-repository/amarriner-gcp-git:${{ github.ref_name }}"
+
