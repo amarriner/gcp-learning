@@ -1,3 +1,7 @@
+variable "account_id" {
+  type = string
+}
+
 variable "bucket_name" {
   type = string
 }
@@ -32,5 +36,13 @@ variable "region" {
 }
 
 variable "source_bucket_name" {
+  type = string
+}
+
+variable "workload_identity_pool_id" {
+  type = string
+}
+
+variable "workload_identity_pool_provider_id" {
   type = string
 }

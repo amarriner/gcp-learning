@@ -27,16 +27,16 @@ module "bucket" {
   region      = var.region
 }
 
-module "cloud_run" {
-  source = "./cloud_run"
-
-  cloud_run_job_name = var.cloud_run_job_name
-  docker_image       = var.docker_image
-  docker_tag         = var.docker_tag
-  project_id         = data.google_project.project.project_id
-  region             = var.region
-  repository_id      = var.repository_id
-}
+# module "cloud_run" {
+#   source = "./cloud_run"
+# 
+#   cloud_run_job_name = var.cloud_run_job_name
+#   docker_image       = var.docker_image
+#   docker_tag         = var.docker_tag
+#   project_id         = data.google_project.project.project_id
+#   region             = var.region
+#   repository_id      = var.repository_id
+# }
 
 module "database" {
   source = "./firestore"
@@ -51,4 +51,12 @@ module "function" {
   bucket_name   = var.source_bucket_name
   function_name = var.function_name
   region        = var.region
+}
+
+module "workflow" {
+  source = "./workflow"
+
+  account_id                         = var.account_id
+  workload_identity_pool_id          = var.workload_identity_pool_id
+  workload_identity_pool_provider_id = var.workload_identity_pool_provider_id
 }
