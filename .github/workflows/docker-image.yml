@@ -8,10 +8,16 @@ on:
       - 'docker/**'
       - '.github/workflows/docker-image.yml'
 
-jobs:
-    
-  docker_build:
+env:
+  DOCKER_IMAGE: amarriner-gcp-git
+  DOCKER_TAG: latest
+  GITHUB_USER_ID: '852892243405'
+  GCP_PROJECT: operating-bolt-447818-b5
+  GCP_REPO: amarriner-gcp-learning-repository
+  GCP_REGION: us-east4
 
+jobs:
+  docker_build:
     runs-on: ubuntu-latest
 
     permissions:
@@ -24,17 +30,17 @@ jobs:
       - name: Auth to GCP
         uses: 'google-github-actions/auth@v2'
         with:
-          service_account: 'amarriner-workflow-sa@operating-bolt-447818-b5.iam.gserviceaccount.com' # my-service-account@my-project.iam.gserviceaccount.com
-          workload_identity_provider: 'projects/852892243405/locations/global/workloadIdentityPools/amarriner-workload-pool/providers/amarriner-workload-pool-provider'
+          service_account: 'amarriner-workflow-sa@${{ GCP_PROJECT }}.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/${{ GITHUB_USER_ID }}/locations/global/workloadIdentityPools/amarriner-workload-pool/providers/amarriner-workload-pool-provider'
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
-          project_id: 'operating-bolt-447818-b5'
+          project_id: ${{ GCP_PROJECT }}
       - name: 'Docker auth'
         run: |-
           gcloud auth configure-docker us-east4-docker.pkg.dev
       - name: Build the Docker image
         run: |-
-          docker build . --file docker/git/Dockerfile --tag "us-east4-docker.pkg.dev/operating-bolt-447818-b5/amarriner-gcp-learning-repository/amarriner-gcp-git:${{ github.ref_name }}"
-          docker push "us-east4-docker.pkg.dev/operating-bolt-447818-b5/amarriner-gcp-learning-repository/amarriner-gcp-git:${{ github.ref_name }}"
+          docker build . --file docker/git/Dockerfile --tag "${{ GCP_REGION }}.pkg.dev/${{ GCP_PROJECT }}/${{ GCP_REPO }}/${{ DOCKER_IMAGE }}:${{ DOCKER_TAG }}"
+          docker push "${{ GCP_REGION }}-docker.pkg.dev/${{ GCP_PROJECT }}/${{ GCP_REPO }}/${{ DOCKER_IMAGE }}:${{ DOCKER_TAG }}"
 
