@@ -10,6 +10,12 @@ provider "google" {
   region      = "us-east4"
 }
 
+module "artifacts" {
+  source = "./artifacts"
+
+  repository_id = var.repository_id
+}
+
 module "bucket" {
   source = "./bucket"
 
@@ -21,3 +27,4 @@ module "database" {
 
   database_name = var.database_name
 }
+

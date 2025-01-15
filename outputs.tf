@@ -9,3 +9,7 @@ output "database_id" {
 output "database_uid" {
   value = module.database.database_uid
 }
+
+output "repository_id" {
+  value = module.artifacts.repository_id
+}

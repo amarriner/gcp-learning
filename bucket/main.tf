@@ -1,4 +1,4 @@
 resource "google_storage_bucket" "amarriner" {
   name          = var.bucket_name
-  location      = "US"
+  location      = "us-east4"
 }
