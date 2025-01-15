@@ -15,12 +15,6 @@ resource "google_project_iam_custom_role" "amarriner" {
   ]
 }
 
-resource "google_service_account_iam_member" "amarriner" {
-  service_account_id = google_service_account.amarriner.id
-  role               = google_project_iam_custom_role.amarriner.name
-  member             = "serviceAccount:${google_service_account.amarriner.email}"
-}
-
 resource "google_iam_workload_identity_pool" "amarriner" {
   workload_identity_pool_id = var.workload_identity_pool_id
   description               = "Workflow ID Pool Github"
@@ -56,20 +50,20 @@ resource "google_service_account_iam_binding" "amarriner" {
   ]
 }
 
-resource "google_service_account_iam_binding" "service_account_registry" {
-  service_account_id = google_service_account.amarriner.name
+resource "google_project_iam_binding" "amarriner" {
+  project            = var.project_id
   role               = google_project_iam_custom_role.amarriner.name
   members = [
     "serviceAccount:${google_service_account.amarriner.email}"
   ]
 }
 
-resource "google_artifact_registry_repository_iam_binding" "amarriner" {
-  repository = var.artifact_repository_name
-  role       = "roles/artifactregistry.admin"
-
-  members = [
-    "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.amarriner.name}/attribute.repository/amarriner/gcp-learning",
-  ]
-}
+# resource "google_artifact_registry_repository_iam_binding" "amarriner" {
+#   repository = var.artifact_repository_name
+#   role       = "roles/artifactregistry.admin"
+#
+#   members = [
+#     "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.amarriner.name}/attribute.repository/amarriner/gcp-learning",
+#   ]
+# }
 
