@@ -1,3 +1,7 @@
-variable database_name {
+variable "database_name" {
+  type = string
+}
+
+variable "region" {
   type = string
 }

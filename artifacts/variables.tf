@@ -1,3 +1,7 @@
-variable repository_id {
+variable "repository_id" {
+  type = string
+}
+
+variable "region" {
   type = string
 }
