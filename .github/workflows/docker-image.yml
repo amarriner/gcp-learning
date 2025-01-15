@@ -47,6 +47,5 @@ jobs:
       - name: Build the Docker image
         run: |-
           docker build . --file docker/git/Dockerfile --tag "${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPO }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}"
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://${{ env.GCP_REGION }}-docker.pkg.dev
           docker push "${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPO }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}"
 
