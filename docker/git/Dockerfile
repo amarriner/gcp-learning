@@ -1,3 +1,4 @@
+# TODO: Find a way to use GCP public repo instead?
 FROM public.ecr.aws/debian/debian:11 AS git
 
 ENV GIT_VERSION=2.47.0
