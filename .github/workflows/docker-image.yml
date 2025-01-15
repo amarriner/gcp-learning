@@ -28,18 +28,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Auth to GCP
         uses: 'google-github-actions/auth@v2'
         with:
           service_account: 'amarriner-workflow-sa@${{ env.GCP_PROJECT }}.iam.gserviceaccount.com'
           workload_identity_provider: 'projects/${{ env.GITHUB_USER_ID }}/locations/global/workloadIdentityPools/amarriner-workload-pool/providers/amarriner-workload-pool-provider'
+
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
           project_id: ${{ env.GCP_PROJECT }}
+
       - name: 'Docker auth'
         run: |-
-          gcloud auth configure-docker us-east4-docker.pkg.dev
+          gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
+
       - name: Build the Docker image
         run: |-
           docker build . --file docker/git/Dockerfile --tag "${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPO }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}"
