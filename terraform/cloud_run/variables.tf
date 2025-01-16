@@ -10,14 +10,12 @@ variable "docker_tag" {
   type = string
 }
 
-variable "project_id" {
-  type = string
-}
-
 variable "region" {
-  type = string
+  type    = string
+  default = "us-east4"
 }
 
 variable "repository_id" {
   type = string
 }
+

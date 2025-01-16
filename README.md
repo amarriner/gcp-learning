@@ -2,12 +2,9 @@
 
 ## Notes
 
-This can't be run all in one step because the cloud run job requires a specific
-image in the artifact registry that the TF won't provide. Obviously that means
-we should split this into separate TF runs but this is just for learning purposes.
-So to get it to deploy I ran it once, the cloud run job failed but everything
-else was created. Then I pushed a docker image up to the repo (using the
-docker/git/Dockerfile to build) and then re-ran TF apply which created the job properly
+* Run terraform/stack
+* Execute github action to build container and push to artifact repo
+* Run terraform/cloud_run to create job that runs the container
 
 ## Sample Output
 
