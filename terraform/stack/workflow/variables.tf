@@ -6,6 +6,10 @@ variable "artifact_repository_name" {
   type = string
 }
 
+variable "project_id" {
+  type = string
+}
+
 variable "workload_identity_pool_id" {
   type = string
 }

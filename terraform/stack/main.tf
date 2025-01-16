@@ -46,6 +46,7 @@ module "workflow" {
   source = "./workflow"
 
   account_id                         = var.account_id
+  project_id                         = data.google_project.project.project_id
   artifact_repository_name           = module.artifacts.repository_id
   workload_identity_pool_id          = var.workload_identity_pool_id
   workload_identity_pool_provider_id = var.workload_identity_pool_provider_id
