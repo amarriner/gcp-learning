@@ -1,0 +1,56 @@
+name: TF Cloud Run Job
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/cloud_run'
+      - '.github/workflows/tf-cloud-run.yml'
+
+env:
+  GCP_PROJECT: operating-bolt-447818-b5
+  GITHUB_USER_ID: "852892243405"
+  TF_VAR_cloud_run_job_name: amarriner-gcp-learning-job 
+  TF_VAR_docker_image: amarriner-gcp-git
+  TF_VAR_docker_tag: latest
+  TF_VAR_repository_id: amarriner-gcp-learning-repository
+
+jobs:
+  docker_build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Auth to GCP
+        uses: 'google-github-actions/auth@v2'
+        with:
+          service_account: 'amarriner-workflow-sa@${{ env.GCP_PROJECT }}.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/${{ env.GITHUB_USER_ID }}/locations/global/workloadIdentityPools/amarriner-wl-pool-2/providers/amarriner-wl-pool-provider-2'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
+
+      - name: 'Set up Terraform'
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.4
+
+      - name: 'Terraform init'
+        run: terraform init
+
+      - name: 'Terraform plan'
+        id: plan
+        run: terraform plan -out tfplan -no-color
+
+      - run: echo ${{ steps.plan.outputs.stdout }}
+      - run: echo ${{ steps.plan.outputs.stderr }}
+      - run: echo ${{ steps.plan.outputs.exitcode }}
