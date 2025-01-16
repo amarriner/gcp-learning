@@ -12,7 +12,8 @@ resource "google_project_iam_custom_role" "amarriner" {
     "artifactregistry.dockerimages.get",
     "artifactregistry.dockerimages.list",
     "artifactregistry.repositories.uploadArtifacts",
-    "storage.objects.list"
+    "storage.objects.list",
+    "storage.objects.get"
   ]
 }
 
