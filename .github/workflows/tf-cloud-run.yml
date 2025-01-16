@@ -44,15 +44,14 @@ jobs:
         with:
           terraform_version: 1.10.4
 
-      - name: Switch Directories
-        run: cd terraform/cloud_run
-
       - name: 'Terraform init'
         run: terraform init
+        working-directory: ./terraform/cloud_run
 
       - name: 'Terraform plan'
         id: plan
         run: terraform plan -out tfplan -no-color
+        working-directory: ./terraform/cloud_run
 
       - name: Output
         run: |-
