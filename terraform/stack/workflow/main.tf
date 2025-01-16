@@ -6,12 +6,13 @@ resource "google_service_account" "amarriner" {
 }
 
 resource "google_project_iam_custom_role" "amarriner" {
-  role_id = "service_account_docker_push"
-  title   = "Service Account Docker Push Role"
+  role_id = "service_account_github_actions"
+  title   = "Service Account Role for Github Actions"
   permissions = [
     "artifactregistry.dockerimages.get",
     "artifactregistry.dockerimages.list",
-    "artifactregistry.repositories.uploadArtifacts"
+    "artifactregistry.repositories.uploadArtifacts",
+    "storage.objects.list"
   ]
 }
 
@@ -51,8 +52,8 @@ resource "google_service_account_iam_binding" "amarriner" {
 }
 
 resource "google_project_iam_binding" "amarriner" {
-  project            = var.project_id
-  role               = google_project_iam_custom_role.amarriner.name
+  project = var.project_id
+  role    = google_project_iam_custom_role.amarriner.name
   members = [
     "serviceAccount:${google_service_account.amarriner.email}"
   ]
