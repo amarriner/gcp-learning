@@ -10,11 +10,11 @@ on:
       - '.github/workflows/tf-cloud-run.yml'
 
 env:
-  GCP_PROJECT: operating-bolt-447818-b5
   GITHUB_USER_ID: "852892243405"
   TF_VAR_cloud_run_job_name: amarriner-gcp-learning-job 
   TF_VAR_docker_image: amarriner-gcp-git
   TF_VAR_docker_tag: latest
+  TF_VAR_project_id: operating-bolt-447818-b5
   TF_VAR_repository_id: amarriner-gcp-learning-repository
 
 jobs:
@@ -32,13 +32,13 @@ jobs:
       - name: Auth to GCP
         uses: 'google-github-actions/auth@v2'
         with:
-          service_account: 'amarriner-workflow-sa@${{ env.GCP_PROJECT }}.iam.gserviceaccount.com'
+          service_account: 'amarriner-workflow-sa@${{ env.TF_VAR_project_id }}.iam.gserviceaccount.com'
           workload_identity_provider: 'projects/${{ env.GITHUB_USER_ID }}/locations/global/workloadIdentityPools/amarriner-wl-pool-2/providers/amarriner-wl-pool-provider-2'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
         with:
-          project_id: ${{ env.GCP_PROJECT }}
+          project_id: ${{ env.TF_VAR_project_id }}
 
       - name: 'Set up Terraform'
         uses: hashicorp/setup-terraform@v3
