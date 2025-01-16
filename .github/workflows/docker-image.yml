@@ -33,7 +33,7 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           service_account: 'amarriner-workflow-sa@${{ env.GCP_PROJECT }}.iam.gserviceaccount.com'
-          workload_identity_provider: 'projects/${{ env.GITHUB_USER_ID }}/locations/global/workloadIdentityPools/amarriner-workload-pool/providers/amarriner-workload-pool-provider'
+          workload_identity_provider: 'projects/${{ env.GITHUB_USER_ID }}/locations/global/workloadIdentityPools/amarriner-wl-pool-2/providers/amarriner-wl-pool-provider-2'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
