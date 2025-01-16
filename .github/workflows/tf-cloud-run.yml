@@ -17,7 +17,7 @@ env:
   TF_VAR_repository_id: amarriner-gcp-learning-repository
 
 jobs:
-  docker_build:
+  tf_plan_cloud_run_job:
     runs-on: ubuntu-latest
 
     permissions:
@@ -44,6 +44,9 @@ jobs:
         with:
           terraform_version: 1.10.4
 
+      - name: Switch Directories
+        run: cd terraform/cloud_run
+
       - name: 'Terraform init'
         run: terraform init
 
@@ -51,6 +54,8 @@ jobs:
         id: plan
         run: terraform plan -out tfplan -no-color
 
-      - run: echo ${{ steps.plan.outputs.stdout }}
-      - run: echo ${{ steps.plan.outputs.stderr }}
-      - run: echo ${{ steps.plan.outputs.exitcode }}
+      - name: Output
+        run: |-
+          echo ${{ steps.plan.outputs.stdout }}
+          echo ${{ steps.plan.outputs.stderr }}
+          echo ${{ steps.plan.outputs.exitcode }}
