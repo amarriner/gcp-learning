@@ -1,4 +1,3 @@
-# run action 20250116-0944
 name: TF Cloud Run Job
 
 on:
@@ -54,8 +53,6 @@ jobs:
         run: terraform plan -out tfplan -no-color
         working-directory: ./terraform/cloud_run
 
-      - name: Output
-        run: |-
-          echo ${{ steps.plan.outputs.stdout }}
-          echo ${{ steps.plan.outputs.stderr }}
-          echo ${{ steps.plan.outputs.exitcode }}
+      - name: Outputs
+        working-directory: ./terraform/cloud_run
+        run: terraform output -json
